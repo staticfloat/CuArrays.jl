@@ -145,8 +145,8 @@ Get the native address of a CuArray, optionally at a given location `index`.
 Equivalent of `Base.pointer` on `Array`s.
 """
 function buffer(xs::CuArray, index::Integer=1)
-  offset = xs.offset + (index-1) * Base.elsize(xs)
-  view(xs.buf, offset)
+  extra_offset = (index-1) * Base.elsize(xs)
+  view(xs.buf, xs.offset + extra_offset)
 end
 
 Base.cconvert(::Type{<:Ptr}, x::CuArray) = throw(ArgumentError("cannot take the CPU address of a $(typeof(x))"))
