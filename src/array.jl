@@ -183,7 +183,7 @@ function Base.copyto!(dest::CuArray{T}, doffs::Integer, src::Array{T}, soffs::In
                       n::Integer) where T
   @boundscheck checkbounds(dest, doffs+n-1)
   @boundscheck checkbounds(src, soffs+n-1)
-  unsafe_copyto!(buffer(dest, doffs), pointer(src, soffs), n*sizeof(T))
+  Mem.copy!(buffer(dest, doffs), pointer(src, soffs), n*sizeof(T))
   return dest
 end
 
@@ -191,7 +191,7 @@ function Base.copyto!(dest::Array{T}, doffs::Integer, src::CuArray{T}, soffs::In
                       n::Integer) where T
   @boundscheck checkbounds(dest, doffs+n-1)
   @boundscheck checkbounds(src, soffs+n-1)
-  unsafe_copyto!(pointer(dest, doffs), buffer(src, soffs), n*sizeof(T))
+  Mem.copy!(pointer(dest, doffs), buffer(src, soffs), n*sizeof(T))
   return dest
 end
 
@@ -199,7 +199,7 @@ function Base.copyto!(dest::CuArray{T}, doffs::Integer, src::CuArray{T}, soffs::
                       n::Integer) where T
   @boundscheck checkbounds(dest, doffs+n-1)
   @boundscheck checkbounds(src, soffs+n-1)
-  unsafe_copyto!(buffer(dest, doffs), buffer(src, soffs), n*sizeof(T))
+  Mem.copy!(buffer(dest, doffs), buffer(src, soffs), n*sizeof(T))
   return dest
 end
 
