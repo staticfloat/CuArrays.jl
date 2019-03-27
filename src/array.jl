@@ -156,7 +156,7 @@ Base.cconvert(::Type{<:CuPtr}, x::CuArray) = buffer(x)
 ## interop with CUDAnative
 
 function Base.convert(::Type{CuDeviceArray{T,N,AS.Global}}, a::CuArray{T,N}) where {T,N}
-  ptr = Base.unsafe_convert(CuPtr{T}, buffer(a))
+  ptr = convert(CuPtr{T}, buffer(a))
   CuDeviceArray{T,N,AS.Global}(a.dims, DevicePtr{T,AS.Global}(ptr))
 end
 
